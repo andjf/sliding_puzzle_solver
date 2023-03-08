@@ -137,6 +137,7 @@ class PuzzleSolver(object):
             return
         current_puzzle = puzzle_tuple
         next_puzzle = self.solver[current_puzzle]
+        # While the puzzle hasn't been solved, print the move
         while next_puzzle != None:
             print(get_diff(current_puzzle, next_puzzle))
             current_puzzle, next_puzzle = next_puzzle, self.solver[next_puzzle]
@@ -168,8 +169,11 @@ class PuzzleSolver(object):
 
 
 def get_diff(old_puzzle: Tuple[Tuple[int]], new_puzzle: Tuple[Tuple[int]]) -> int:
+    """Given two move-adjacent puzzles in the tuple format, find which tile was moved"""
     for old_row, new_row in zip(old_puzzle, new_puzzle):
         for old_value, new_value in zip(old_row, new_row):
+            # Look through each cell for the empty space.
+            # Whatever replaced the empty space was the tile that moved
             if old_value == 0:
                 return new_value
             if new_value == 0:
